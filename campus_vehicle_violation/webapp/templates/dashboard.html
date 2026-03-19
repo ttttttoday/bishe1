@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}首页 - 校园违规车辆检测系统{% endblock %}
+{% block content %}
+<div class="row g-3 mb-3">
+  <div class="col-md-3">
+    <div class="card metric-card h-100"><div class="card-body"><h6>总任务数</h6><h2>{{ total_tasks }}</h2></div></div>
+  </div>
+  <div class="col-md-3">
+    <div class="card metric-card h-100"><div class="card-body"><h6>完成任务</h6><h2>{{ done_tasks }}</h2></div></div>
+  </div>
+  <div class="col-md-3">
+    <div class="card metric-card h-100"><div class="card-body"><h6>失败任务</h6><h2>{{ failed_tasks }}</h2></div></div>
+  </div>
+  <div class="col-md-3">
+    <div class="card metric-card h-100"><div class="card-body"><h6>违规事件总数</h6><h2>{{ event_count }}</h2></div></div>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span>最近任务</span>
+    <a class="btn btn-sm btn-primary" href="{{ url_for('main.upload') }}">上传新视频</a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle mb-0">
+      <thead><tr><th>ID</th><th>标题</th><th>状态</th><th>创建时间</th><th>操作</th></tr></thead>
+      <tbody>
+      {% for t in latest_tasks %}
+        <tr>
+          <td>{{ t.id }}</td>
+          <td>{{ t.title }}</td>
+          <td><span class="badge text-bg-{% if t.status == 'done' %}success{% elif t.status == 'failed' %}danger{% elif t.status == 'processing' %}warning{% else %}secondary{% endif %}">{{ t.status }}</span></td>
+          <td>{{ t.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+          <td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('main.task_detail', task_id=t.id) }}">查看</a></td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5" class="text-center text-muted">暂无任务</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+body {
+  background: linear-gradient(135deg, #f3f7ff 0%, #eef8f5 100%);
+}
+
+.metric-card {
+  border: 0;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.card {
+  border-radius: 14px;
+}
+
+.table th,
+.table td {
+  white-space: nowrap;
+}

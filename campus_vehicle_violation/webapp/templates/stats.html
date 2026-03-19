@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}统计分析 - 校园违规车辆检测系统{% endblock %}
+{% block content %}
+<div class="row g-3">
+  <div class="col-lg-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-header">违规类型分布</div>
+      <div class="card-body"><canvas id="typeChart"></canvas></div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-header">违规区域 Top10</div>
+      <div class="card-body"><canvas id="zoneChart"></canvas></div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-header">违规车辆类别分布</div>
+      <div class="card-body"><canvas id="classChart"></canvas></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const typeLabels = {{ type_rows|map(attribute=0)|list|tojson }};
+const typeValues = {{ type_rows|map(attribute=1)|list|tojson }};
+const zoneLabels = {{ zone_rows|map(attribute=0)|list|tojson }};
+const zoneValues = {{ zone_rows|map(attribute=1)|list|tojson }};
+const classLabels = {{ class_rows|map(attribute=0)|list|tojson }};
+const classValues = {{ class_rows|map(attribute=1)|list|tojson }};
+
+new Chart(document.getElementById("typeChart"), {
+  type: "pie",
+  data: { labels: typeLabels, datasets: [{ data: typeValues }] }
+});
+new Chart(document.getElementById("zoneChart"), {
+  type: "bar",
+  data: { labels: zoneLabels, datasets: [{ label: "次数", data: zoneValues }] },
+  options: { plugins: { legend: { display: false } } }
+});
+new Chart(document.getElementById("classChart"), {
+  type: "doughnut",
+  data: { labels: classLabels, datasets: [{ data: classValues }] }
+});
+</script>
+{% endblock %}

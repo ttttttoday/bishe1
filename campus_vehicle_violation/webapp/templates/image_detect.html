@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}图片检测 - 校园违规车辆检测系统{% endblock %}
+{% block content %}
+<div class="row g-3">
+  <div class="col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h4 class="mb-3">单张图片检测</h4>
+        <form method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label class="form-label">上传图片</label>
+            <input type="file" class="form-control" name="image" accept=".jpg,.jpeg,.png,.bmp,.webp" required>
+          </div>
+          <button type="submit" class="btn btn-primary">开始检测</button>
+        </form>
+        <hr>
+        <p class="mb-1">目标总数：<strong>{{ total }}</strong></p>
+        <ul class="mb-0">
+          {% for cls, cnt in stats %}
+          <li>{{ cls }}: {{ cnt }}</li>
+          {% else %}
+          <li>暂无统计</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="card shadow-sm h-100">
+      <div class="card-body p-3">
+        {% if result_name %}
+          <img class="img-fluid rounded border" src="{{ url_for('main.output_file', filename=result_name) }}" alt="检测结果">
+        {% else %}
+          <div class="text-muted">上传一张图片后，这里会显示检测结果。</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

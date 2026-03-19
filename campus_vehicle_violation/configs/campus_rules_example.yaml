@@ -1,0 +1,31 @@
+# Use real coordinates from your camera scene (pixel coordinates).
+# You can set polygons by selecting points on a key frame screenshot.
+
+forbidden_zones:
+  - name: "Dorm Gate No-Entry"
+    classes: ["car", "van", "truck", "bus", "motor", "tricycle", "awning_tricycle"]
+    points:
+      - [120, 80]
+      - [620, 80]
+      - [620, 280]
+      - [120, 280]
+
+no_parking_zones:
+  - name: "Teaching Building Front"
+    classes: ["car", "van", "truck", "bus", "motor"]
+    points:
+      - [80, 300]
+      - [760, 300]
+      - [760, 520]
+      - [80, 520]
+
+stationary:
+  # If IoU between current and previous box is higher than this threshold,
+  # we treat this object as almost stationary for one frame.
+  iou_threshold: 0.90
+  # Example: 45 frames at 15 FPS means about 3 seconds
+  min_frames: 45
+
+tracking:
+  match_iou: 0.30
+  max_lost: 20

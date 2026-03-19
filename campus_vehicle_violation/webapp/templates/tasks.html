@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}任务列表 - 校园违规车辆检测系统{% endblock %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <span>检测任务列表</span>
+    <a href="{{ url_for('main.upload') }}" class="btn btn-sm btn-primary">新建任务</a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle mb-0">
+      <thead>
+        <tr>
+          <th>ID</th><th>任务名称</th><th>原视频</th><th>状态</th><th>进度</th><th>创建时间</th><th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for t in tasks %}
+        <tr>
+          <td>{{ t.id }}</td>
+          <td>{{ t.title }}</td>
+          <td>{{ t.input_filename }}</td>
+          <td><span class="badge text-bg-{% if t.status == 'done' %}success{% elif t.status == 'failed' %}danger{% elif t.status == 'processing' %}warning{% else %}secondary{% endif %}">{{ t.status }}</span></td>
+          <td>{{ t.processed_frames }}/{{ t.total_frames }}</td>
+          <td>{{ t.created_at.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+          <td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('main.task_detail', task_id=t.id) }}">详情</a></td>
+        </tr>
+      {% else %}
+        <tr><td colspan="7" class="text-center text-muted">暂无任务</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
