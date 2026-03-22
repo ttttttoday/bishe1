@@ -1,0 +1,7 @@
+frame_id,track_id,class,violation_type,zone_name
+1,1,bus,no_entry,Dorm Gate No-Entry
+1,2,car,no_entry,Dorm Gate No-Entry
+1,4,car,no_entry,Dorm Gate No-Entry
+1,6,car,no_entry,Dorm Gate No-Entry
+1,8,car,no_entry,Dorm Gate No-Entry
+1,12,car,no_entry,Dorm Gate No-Entry

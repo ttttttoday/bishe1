@@ -1,21 +1,24 @@
 import os
 from pathlib import Path
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "campus-violation-secret-key-change-me")
+    
+    # --- 修改后的部分开始 ---
+    # 使用 SQLite 数据库，数据将保存在项目根目录下的 campus.db 文件中
     SQLALCHEMY_DATABASE_URI = os.getenv(
         "DATABASE_URL",
-        "mysql+pymysql://root:123456@127.0.0.1:3306/campus_violation?charset=utf8mb4",
+        "sqlite:///" + str(BASE_DIR / "campus.db")
     )
+    # --- 修改后的部分结束 ---
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     UPLOAD_FOLDER = str(BASE_DIR / "webapp" / "uploads")
     OUTPUT_FOLDER = str(BASE_DIR / "webapp" / "outputs")
-    ALLOWED_EXTENSIONS = {"mp4", "avi", "mov", "mkv"}
+    ALLOWED_EXTENSIONS = {"mp4", "avi", "mov", "mkv", "webp"}
     IMAGE_EXTENSIONS = {"jpg", "jpeg", "png", "bmp", "webp"}
 
     MODEL_WEIGHTS = os.getenv(
